@@ -1,0 +1,7 @@
+1) Restaurar carpeta node_modules con el comando npm i desde el cmd 
+
+2) Abrir el archivo en Visual Studio Code
+
+3) Abrir una terminal para correr e servidor con el comando npm run dev (revisar los script en el archivo Package.json) 
+
+4) Abrir el navegador y colocar la dirección del localhost y el puerto usado (4000)
