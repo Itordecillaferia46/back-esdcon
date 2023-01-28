@@ -20,11 +20,20 @@ app.use(express.json())
 
 const usuarioPath = require("./routes/Usuarios")
 const contenidoPath = require("./routes/Contenidos")
+const actividadPath = require("./routes/Actividades")
 const draganddropPath = require("./routes/Draganddrops")
+const evaluacionPath = require("./routes/Evaluaciones")
+
 //routes
+app.get("/", (req, res) => {
+  res.send("API para CRUD para base de datos de proyecto de Software ESDCOND (Isaac Tordecilla, Mara Torres, Dina Mendoza)");
+});
+
 app.use("/", usuarioPath)
 app.use("/", contenidoPath)
+app.use("/", actividadPath)
 app.use("/", draganddropPath)
+app.use("/", evaluacionPath)
 
 //Settings
 app.set("port", process.env.PORT || 4000);

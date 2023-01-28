@@ -6,13 +6,13 @@ const Usuario = require('../models/Usuarios');
 
 router.get('/favicon.ico', (req, res) => res.status(204));
 
-router.get('/', async (req, res) => {
+router.get('/users', async (req, res) => {
 	const usuarios = await Usuario.find();
 
 	res.json(usuarios);
 });
 
-router.post('/newusers', async (req, res, next) => {
+router.post('/users', async (req, res, next) => {
 	try{
 		const {nombre, correo, contraseña} = req.body;
 		const usuarioNuevo = Usuario({
@@ -29,28 +29,28 @@ router.post('/newusers', async (req, res, next) => {
 
 
 // Get specific users
-router.get('/:id', async (req, res) => {
+router.get('/users/:id', async (req, res) => {
 	const p = await Usuario.findById({ _id: req.params.id });
 
 	res.json(p);
 });
 
 // Delete a users
-router.delete('/:id', async (req, res) => {
+router.delete('/users/:id', async (req, res) => {
 	const result = await Usuario.findByIdAndDelete({ _id: req.params.id });
 
 	res.json(result);
 });
 
 // Update a users
-router.patch('/:id', async (req, res) => {
+router.patch('/users/:id', async (req, res) => {
 	const p = await Usuario.updateOne({_id: req.params.id}, {$set: req.body});
 
 	res.json(p);
 });
 
 // Get random users
-router.get('/random', async (req, res) => {
+router.get('/users/random', async (req, res) => {
 	const count = await Usuario.countDocuments();
 	const random = Math.floor(Math.random() * count);
 	const p = await Usuario.findOne().skip(random);
