@@ -1,27 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const Usuario = require('../models/Usuarios');
+const Draganddrop = require('../models/Draganddrops');
 
 //get all routes
 
 router.get('/favicon.ico', (req, res) => res.status(204));
 
 router.get('/', async (req, res) => {
-	const usuarios = await Usuario.find();
+	const draganddrops = await Draganddrop.find();
 
-	res.json(usuarios);
+	res.json(draganddrops);
 });
 
-router.post('/newusers', async (req, res, next) => {
+router.post('/newdad', async (req, res, next) => {
 	try{
-		const {nombre, correo, contraseña} = req.body;
-		const usuarioNuevo = Usuario({
-			nombre,
-			correo,
-			contraseña
+		const {enunciado, respuesta, retroalimentacion} = req.body;
+		const dadNuevo = Draganddrop({
+			enunciado,
+			respuesta,
+			retroalimentacion
 		})
-		const guardar = await usuarioNuevo.save()
-		res.send(usuarioNuevo)
+		const guardar = await dadNuevo.save()
+		res.send(dadNuevo)
 	} catch(err){
 		next(err)
 	}
@@ -30,28 +30,28 @@ router.post('/newusers', async (req, res, next) => {
 
 // Get specific users
 router.get('/:id', async (req, res) => {
-	const p = await Usuario.findById({ _id: req.params.id });
+	const p = await Draganddrop.findById({ _id: req.params.id });
 
 	res.json(p);
 });
 
 // Delete a users
 router.delete('/:id', async (req, res) => {
-	const result = await Usuario.findByIdAndDelete({ _id: req.params.id });
+	const result = await Draganddrop.findByIdAndDelete({ _id: req.params.id });
 
 	res.json(result);
 });
 
 // Update a users
 router.patch('/:id', async (req, res) => {
-	const p = await Usuario.updateOne({_id: req.params.id}, {$set: req.body});
+	const p = await Draganddrop.updateOne({_id: req.params.id}, {$set: req.body});
 
 	res.json(p);
 });
 
 // Get random users
 router.get('/random', async (req, res) => {
-	const count = await Usuario.countDocuments();
+	const count = await Draganddrop.countDocuments();
 	const random = Math.floor(Math.random() * count);
 	const p = await Usuario.findOne().skip(random);
 

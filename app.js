@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -18,9 +19,12 @@ app.use(cors());
 app.use(express.json())
 
 const usuarioPath = require("./routes/Usuarios")
-
+const contenidoPath = require("./routes/Contenidos")
+const draganddropPath = require("./routes/Draganddrops")
 //routes
-app.use("/users", usuarioPath)
+app.use("/", usuarioPath)
+app.use("/", contenidoPath)
+app.use("/", draganddropPath)
 
 //Settings
 app.set("port", process.env.PORT || 4000);
@@ -31,13 +35,17 @@ app.listen(app.get("port"), () => {
 });
 
 //DB conection
-
 mongoose
-  .connect('mongodb+srv://itordecillaferia46:<password>@cluster0.hpqzdzo.mongodb.net/?retryWrites=true&w=majority', {
+  .connect(process.env.BD)
+  .then(() => console.log("Database connected"))
+  .catch((error) => console.error(error));
+
+/* mongoose
+  .connect("mongodb+srv://itordecillaferia46:esdconAbd@cluster0.hpqzdzo.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((db) => console.log("DB is connected"))
+  .then((db) => console.log("Database connected"))
   .catch((err) => console.error(err));
-
-  //mongodb+srv://itordecillaferia46:<password>@cluster0.hpqzdzo.mongodb.net/?retryWrites=true&w=majority
+ */
+  
